@@ -70,7 +70,7 @@ const config = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'React Redux Boilerplate',
+      title: 'React Redux template',
       template: './src/index.ejs',
       chunks: ['dev', 'app'],
       inject: 'body',

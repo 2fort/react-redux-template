@@ -83,7 +83,7 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'React Redux Boilerplate',
+      title: 'React Redux template',
       template: './src/index.ejs',
       inject: 'body',
       filename: 'index.html',

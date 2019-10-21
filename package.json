@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-boilerplate",
+  "name": "react-redux-template",
   "version": "0.0.1",
-  "description": "react-redux boilerplate",
+  "description": "react-redux template",
   "main": "index.js",
   "scripts": {
     "start": "cross-env BABEL_ENV=development webpack-dev-server --mode development",
