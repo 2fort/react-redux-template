@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -33,14 +33,14 @@ const Entrance = () => {
   const accessToken = useSelector((state) => state.auth.accessToken);
 
   return (
-    <Fragment>
+    <React.Fragment>
       <Header />
       <Switch>
         <Route path="/" exact component={Main} />
         <ProtectedRoute path="/protected" exact component={ProtectedPage} authorized={!!accessToken} />
         <Route component={Route404} />
       </Switch>
-    </Fragment>
+    </React.Fragment>
   );
 };
 

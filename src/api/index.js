@@ -2,19 +2,18 @@ const prefix = '/api';
 
 let store;
 
-const defaultOptions = {
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-};
-
 function getStore(configuredStore) {
   store = configuredStore;
 }
 
 function getDefaultOptions(newOptions = {}, withToken) {
-  const options = Object.assign({}, JSON.parse(JSON.stringify(defaultOptions)), newOptions);
+  const options = {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    ...newOptions,
+  };
 
   const state = store.getState();
   const { accessToken } = state.auth;
@@ -26,7 +25,7 @@ function getDefaultOptions(newOptions = {}, withToken) {
   return options;
 }
 
-function parseJSON(response) {
+function parseJSON(response, method) {
   const remember = {
     ok: response.ok,
     status: response.status,
@@ -34,7 +33,7 @@ function parseJSON(response) {
   };
 
   return new Promise((resolve) =>
-    response.json()
+    response[method]()
       .then((json) => resolve({ ...remember, parsedJson: json }))
       .catch(() => resolve(remember)));
 }
@@ -42,7 +41,30 @@ function parseJSON(response) {
 function request(endpoint, options) {
   return new Promise((resolve, reject) =>
     fetch(endpoint, options)
-      .then((result) => parseJSON(result))
+      .then((response) => {
+        const contentType = response.headers.get('content-type');
+
+        // text
+        if (!contentType || contentType.includes('text/plain')) {
+          return parseJSON(response, 'text');
+        }
+
+        // blob
+        const contentDisposition = response.headers.get('content-disposition');
+        const filenameIndex = !!contentDisposition && contentDisposition.indexOf('filename*=UTF-8');
+
+        if (contentDisposition && filenameIndex !== -1) {
+          return parseJSON(response, 'blob');
+        }
+
+        // json
+        if (contentType.includes('application/json')) {
+          return parseJSON(response, 'json');
+        }
+
+        // default
+        return parseJSON(response, 'text');
+      })
       .then((response) => {
         if (response.ok) {
           if (response.parsedJson) {
@@ -64,16 +86,21 @@ function request(endpoint, options) {
           return reject(error);
         }
 
-        const error = new Error(`${response.status}: ${response.statusText}`);
+        const error = new Error(response.statusText ? `${response.status}: ${response.statusText}` : response.status);
         error.response = response;
         return reject(error);
       })
       .catch((response) => {
-        const error = new Error(`Error: status: ${response.status} - ${response.statusText}, message: ${response.message}`);
+        const errorMessage = (response.status || response.statusText)
+          ? `Error: status: ${response.status} - ${response.statusText}, message: ${response.message}`
+          : response.message;
+
+        const error = new Error(errorMessage);
         error.response = response;
+        error.name = response.name;
 
         /* if (response.name !== 'AbortError') {
-
+          // global notification
         } */
 
         return reject(error);
@@ -83,7 +110,6 @@ function request(endpoint, options) {
 export default {
   prefix,
   getStore,
-  defaultOptions,
   get: (endpoint, options, withToken = true) =>
     request(endpoint, { method: 'GET', ...getDefaultOptions(options, withToken) }),
   post: (endpoint, options, withToken = true) =>

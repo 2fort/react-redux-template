@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 const ProtectedPage = () => (
   <div>This is a protected page. It can only be accessed if accessToken provided.</div>

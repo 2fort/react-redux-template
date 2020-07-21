@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
