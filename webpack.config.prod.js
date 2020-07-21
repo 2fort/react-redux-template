@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const staticFolder = 'static';
+
 module.exports = {
   entry: {
     app: ['./src/App.jsx'],
@@ -11,8 +13,8 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'build'),
     publicPath: '/',
-    filename: 'js/[name].[chunkhash:8].js',
-    chunkFilename: 'js/[name].[chunkhash:8].chunk.js',
+    filename: `${staticFolder}/[name].[chunkhash:8].js`,
+    chunkFilename: `${staticFolder}/[name].[chunkhash:8].chunk.js`,
   },
 
   resolve: {
@@ -59,7 +61,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: 'img/[name]-[hash:10].[ext]',
+              name: `${staticFolder}/img/[name]-[hash:10].[ext]`,
             },
           },
         ],
@@ -71,7 +73,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: 'fonts/[name].[ext]',
+              name: `${staticFolder}/fonts/[name].[ext]`,
             },
           },
         ],
@@ -96,8 +98,8 @@ module.exports = {
     }),
     new webpack.optimize.AggressiveMergingPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'styles/[name].[contenthash].css',
-      chunkFilename: 'styles/[id].[contenthash].css',
+      filename: `${staticFolder}/[name].[contenthash].css`,
+      chunkFilename: `${staticFolder}/[id].[contenthash].css`,
     }),
   ],
 };
