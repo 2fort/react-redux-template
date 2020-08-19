@@ -4,8 +4,8 @@
       "browser": true,
       "node": true
   },
-  "extends": "airbnb",
-  "plugins": ["react-hooks"],
+  "extends": ["airbnb", "plugin:jest/recommended", "plugin:jest/style"],
+  "plugins": ["react-hooks", "jest"],
   "rules": {
       "indent": ["error", 2, {"SwitchCase": 1}],
       "react/jsx-indent": ["error", 2],
@@ -33,6 +33,7 @@
       "react-hooks/exhaustive-deps": "warn",
       "react/jsx-fragments": 0,
       "prefer-object-spread": 0,
-      "react/jsx-props-no-spreading": 0
+      "react/jsx-props-no-spreading": 0,
+      "react/jsx-filename-extension": 0
   }
 }

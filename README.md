@@ -1,3 +1,3 @@
 ## React-redux template
 
-React/redux, jss, custom fetch wrapper, eslint with airbnb rules, etc.
+React/redux, jss, custom fetch wrapper, eslint with airbnb rules, testing with Jest, etc.

@@ -4,7 +4,7 @@ import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
 import { signIn, signOut } from '../ducks/auth';
 
-const useStyles = createUseStyles(() => ({
+const useStyles = createUseStyles({
   header: {
     height: 40,
     marginBottom: 50,
@@ -20,7 +20,7 @@ const useStyles = createUseStyles(() => ({
     marginRight: 0,
     marginLeft: 'auto',
   },
-}));
+});
 
 const Header = () => {
   const classes = useStyles();
