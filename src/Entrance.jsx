@@ -1,11 +1,11 @@
-import * as React from 'react';
+import { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Header from './components/Header';
 import Route404 from './components/Route404';
-import Main from './containers/Main';
-import ProtectedPage from './containers/ProtectedPage';
+import Main from './pages/Main';
+import ProtectedPage from './pages/ProtectedPage';
 
 const ProtectedRoute = ({
   component: Component,
@@ -33,14 +33,14 @@ const Entrance = () => {
   const accessToken = useSelector((state) => state.auth.accessToken);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Header />
       <Switch>
         <Route path="/" exact component={Main} />
         <ProtectedRoute path="/protected" exact component={ProtectedPage} authorized={!!accessToken} />
         <Route component={Route404} />
       </Switch>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

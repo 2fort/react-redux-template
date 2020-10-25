@@ -26,6 +26,12 @@ const config = {
   module: {
     rules: [
       {
+        test: /\.m?js$/,
+        resolve: {
+          fullySpecified: false,
+        },
+      },
+      {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },

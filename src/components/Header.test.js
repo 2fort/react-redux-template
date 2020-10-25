@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { render, cleanup } from '../test-utils';
 import Header from './Header';
 

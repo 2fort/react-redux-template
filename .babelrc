@@ -13,7 +13,9 @@
     ]
   ],
   "presets": [
-    "@babel/preset-react"
+    ["@babel/preset-react", {
+      "runtime": "automatic"
+    }]
   ],
   "env": {
     "development": {
@@ -32,6 +34,12 @@
       ]
     },
     "production": {
+      "plugins": [
+        ["transform-react-remove-prop-types", {
+          "ignoreFilenames": ["node_modules"]
+        }],
+        "babel-plugin-jsx-remove-data-test-id"
+      ],
       "presets": [
         [
           "@babel/preset-env",
@@ -47,7 +55,7 @@
       ]
     },
     "test": {
-      "presets": ["@babel/preset-env", "@babel/preset-react"]
+      "presets": ["@babel/preset-env"]
     }
   }
 }
