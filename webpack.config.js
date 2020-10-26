@@ -6,11 +6,7 @@ const BASE_URL = `http://localhost:${port}`;
 
 const config = {
   entry: {
-    app: [
-      './src/App.jsx',
-      `webpack-dev-server/client?http://localhost:${port}`,
-      'webpack/hot/only-dev-server',
-    ],
+    app: './src/App.jsx',
   },
 
   output: {
@@ -98,6 +94,7 @@ const config = {
     hot: true,
     contentBase: '/build',
     publicPath: '/',
+    host: 'localhost',
     historyApiFallback: true,
     stats: 'minimal',
     port,
