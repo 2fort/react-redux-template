@@ -110,6 +110,7 @@ function request(endpoint, options) {
 export default {
   prefix,
   getStore,
+  getDefaultOptions,
   get: (endpoint, options, withToken = true) =>
     request(endpoint, { method: 'GET', ...getDefaultOptions(options, withToken) }),
   post: (endpoint, options, withToken = true) =>
