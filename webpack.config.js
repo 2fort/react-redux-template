@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const port = 3050;
 const BASE_URL = `http://localhost:${port}`;
@@ -12,7 +13,7 @@ const config = {
   output: {
     path: '/build',
     publicPath: '/',
-    filename: 'js/[hash].[name].js',
+    filename: 'js/[contenthash].[name].js',
   },
 
   resolve: {
@@ -39,6 +40,9 @@ const config = {
             loader: 'babel-loader',
             options: {
               cacheDirectory: true,
+              plugins: [
+                'react-refresh/babel',
+              ],
             },
           },
         ],
@@ -85,6 +89,7 @@ const config = {
       },
     }),
     new webpack.HotModuleReplacementPlugin(),
+    new ReactRefreshWebpackPlugin(),
   ],
 
   performance: { hints: false },

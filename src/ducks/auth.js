@@ -1,3 +1,5 @@
+import produce from 'immer';
+
 const prefix = 'Auth';
 
 const SET_AUTHORIZED = `${prefix}/SET_AUTHORIZED`;
@@ -24,21 +26,19 @@ const initialState = {
   accessToken: localStorage.getItem('accessToken') || '',
 };
 
-export default function reducer(state = initialState, action) {
+/* eslint-disable default-case */
+
+const reducer = produce((draft, action) => {
   switch (action.type) {
     case SET_AUTHORIZED:
-      return {
-        ...state,
-        accessToken: action.token,
-      };
+      draft.accessToken = action.token;
+      return;
 
     case SET_UNAUTHORIZED:
-      return {
-        ...state,
-        accessToken: '',
-      };
-
-    default:
-      return state;
+      draft.accessToken = '';
   }
-}
+}, initialState);
+
+export default reducer;
+
+/* eslint-disable default-case */
