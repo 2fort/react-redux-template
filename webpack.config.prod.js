@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const staticFolder = 'static';
 
@@ -92,6 +93,7 @@ module.exports = {
       template: './src/index.ejs',
       inject: 'body',
       filename: 'index.html',
+      withManifest: true,
       NODE_ENV: 'production',
     }),
     new webpack.DefinePlugin({
@@ -103,6 +105,11 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: `${staticFolder}/[name].[contenthash].css`,
       chunkFilename: `${staticFolder}/[id].[contenthash].css`,
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: 'src/static/**/*', to: '[name].[ext]' },
+      ],
     }),
   ],
 };

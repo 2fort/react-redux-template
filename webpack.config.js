@@ -81,6 +81,7 @@ const config = {
       chunks: ['dev', 'app'],
       inject: 'body',
       filename: 'index.html',
+      withManifest: false,
       baseurl: BASE_URL,
     }),
     new webpack.DefinePlugin({
