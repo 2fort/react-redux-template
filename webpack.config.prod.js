@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 const staticFolder = 'static';
+const withFavicons = false; // add favicons and change this to true
 
 module.exports = {
   entry: {
@@ -93,7 +94,7 @@ module.exports = {
       template: './src/index.ejs',
       inject: 'body',
       filename: 'index.html',
-      withManifest: true,
+      withManifest: withFavicons,
       NODE_ENV: 'production',
     }),
     new webpack.DefinePlugin({
@@ -108,7 +109,8 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: 'src/static/**/*', to: '[name].[ext]' },
+        ...(withFavicons ? [{ from: 'src/static/favicons/**/*', to: '[name][ext]' }] : []),
+        { from: 'src/static/other/**/*', to: '[name][ext]' },
       ],
     }),
   ],
