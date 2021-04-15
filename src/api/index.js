@@ -58,7 +58,7 @@ function request(endpoint, options) {
         }
 
         // json
-        if (contentType.includes('application/json')) {
+        if (contentType.includes('application/json') || contentType.includes('application/problem+json')) {
           return parseJSON(response, 'json');
         }
 
